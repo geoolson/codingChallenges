@@ -18,15 +18,31 @@ B B B
 """
 import unittest
 
-def dimensions(matrix):
-    return (len(matrix[0]), len(matrix))
+class ColorFill():
+    def __init__(self, matrix):
+        self.image = matrix
+        self.dim = (len(matrix[0]), len(matrix))
 
-def fill(image, xpos, ypos, color):
-    dim = dimensions(image)
-    if( xpos >= dim[0] or ypos >= dim[1]):
-        raise Exception("coordinates out of bounds of image")
-    return image
-    
+    def _fill(self, xpos, ypos, color, ogcolor):
+        if(xpos < 0 or ypos < 0):
+            return
+        if( xpos >= self.dim[1] or ypos >= self.dim[0]):
+            return
+        elif( self.image[xpos][ypos] == ogcolor ):
+            self.image[xpos][ypos] = color
+            self._fill(xpos-1, ypos, color, ogcolor)
+            self._fill(xpos+1, ypos, color, ogcolor)
+            self._fill(xpos, ypos-1, color, ogcolor)
+            self._fill(xpos, ypos+1, color, ogcolor)
+        else:
+            return
+
+    def fill(self, xpos, ypos, color):
+        if( xpos >= self.dim[0] or ypos >= self.dim[1]):
+            raise Exception("coordinates out of bounds of image")
+        ogColor = self.image[xpos][ypos]
+        self._fill( xpos, ypos, color, ogColor)
+        return self.image
 
 class TestChallenge(unittest.TestCase):
     def setUp(self):
@@ -42,7 +58,8 @@ class TestChallenge(unittest.TestCase):
             ['W','W','W'],
             ['B','B','B']
         ]
-        self.result = fill(self.input, 2, 2, 'G')
+        colorFill = ColorFill(self.input)
+        self.result = colorFill.fill(2, 2, 'G')
 
     def test_list_eq(self):
         self.assertListEqual(self.result, self.expected)
