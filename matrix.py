@@ -25,6 +25,7 @@ def fill(image, xpos, ypos, color):
     dim = dimensions(image)
     if( xpos >= dim[0] or ypos >= dim[1]):
         raise Exception("coordinates out of bounds of image")
+    return image
     
 
 class TestChallenge(unittest.TestCase):
@@ -41,15 +42,10 @@ class TestChallenge(unittest.TestCase):
             ['W','W','W'],
             ['B','B','B']
         ]
+        self.result = fill(self.input, 2, 2, 'G')
+
     def test_list_eq(self):
-        self.assertListEqual(self.input, self.expected)
+        self.assertListEqual(self.result, self.expected)
 
 if __name__ == '__main__' :
     unittest.main()
-    input0 = [
-        ['B','B','W'],
-        ['W','W','W'],
-        ['W','W','W'],
-        ['B','B','B']
-    ]
-    fill(input0, 2, 3, 'G')
