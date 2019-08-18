@@ -30,7 +30,7 @@ class Problem():
     def randNum(self):
         randVal = random.random()
         for i in range(0, len(self.ranges)):
-            if randVal < self.ranges[i]:
+            if randVal <= self.ranges[i]:
                 return self.nums[i]
 
 if __name__ == "__main__":
