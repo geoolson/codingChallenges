@@ -21,9 +21,9 @@ def canSum(inputNums, k):
 def onePass(inputNums, k):
     checkedVals = set()
     for i in inputNums:
-        checkedVals.add(i)
         if (k-i in checkedVals):
             return True
+        checkedVals.add(i)
     return False
 
 class Problem(unittest.TestCase):
