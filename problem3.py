@@ -17,7 +17,11 @@ The following test should pass:
 node = Node('root', Node('left', Node('left.left')), Node('right'))
 assert _deserialize(serialize(node)).left.left.val == 'left.left'
 """
-import unittest
+class Node:
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
 
 class Stringifier():
     def __init__(self):
@@ -33,6 +37,9 @@ class Stringifier():
         strTree.append('}')
         return "".join(strTree)
 
+    def deserialize(self, strTree):
+        self.current = 0
+        return self._deserialize(strTree)
     def _deserialize(self, strTree):
         left = None
         right = None
@@ -53,18 +60,10 @@ class Stringifier():
                 self.current += 1
                 return Node(val, left, right)
     
-    def deserialize(self, strTree):
-        self.current = 0
-        return self._deserialize(strTree)
-
-class Node:
-    def __init__(self, val, left=None, right=None):
-        self.val = val
-        self.left = left
-        self.right = right
-
 if __name__ == "__main__":
     node = Node('root', Node('left', Node('left.left')), Node('right'))
     stringifier = Stringifier()
+    assert stringifier.deserialize(stringifier.serialize(node)).val == 'root'
+    assert stringifier.deserialize(stringifier.serialize(node)).left.val == 'left'
     assert stringifier.deserialize(stringifier.serialize(node)).left.left.val == 'left.left'
     assert stringifier.deserialize(stringifier.serialize(node)).right.val == 'right'
