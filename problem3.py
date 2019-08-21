@@ -23,6 +23,11 @@ class Node:
         self.left = left
         self.right = right
 
+    def __repr__(self):
+        return( 'Node(' + repr(self.val) + ', '
+            + repr(self.left) + ', '
+            + repr(self.right) + ')' )
+
 class Stringifier():
     def __init__(self):
         self.current = 0
@@ -67,3 +72,7 @@ if __name__ == "__main__":
     assert stringifier.deserialize(stringifier.serialize(node)).left.val == 'left'
     assert stringifier.deserialize(stringifier.serialize(node)).left.left.val == 'left.left'
     assert stringifier.deserialize(stringifier.serialize(node)).right.val == 'right'
+
+    #uses the special fucntion __repr__ to stringify tree
+    #and eval works on the string as well
+    assert eval(str(node)).val == 'root'
