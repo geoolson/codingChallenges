@@ -8,6 +8,8 @@ For example, given the numbers [1, 2, 3, 4] and probabilities [0.1, 0.5, 0.2, 0.
 You can generate random numbers between 0 and 1 uniformly.
 """
 import random
+import bisect
+
 class Problem():
     def __init__(self, probs, nums):
         self.probs = probs
@@ -33,7 +35,10 @@ class Problem():
             if randVal <= self.ranges[i]:
                 return self.nums[i]
 
+    def randNumBisect(self):
+        return self.nums[bisect.bisect_right(self.ranges, random.random())]
+
 if __name__ == "__main__":
     problem = Problem([0.1,0.5,0.2,0.2], [1,2,3,4])
-    for i in range(0,10):
-        print(problem.randNum())
+    new_list = [problem.randNumBisect() for i in range(10)]
+    print(new_list)
