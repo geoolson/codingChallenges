@@ -38,9 +38,25 @@ class Problem:
         self._hops(nums, 0)
         return self.success
 
+def hopsGreedy(nums):
+    current = next = 0
+    jump = furthestJump = nums[current]
+    while next + nums[next] < len(nums)-1:
+        current = next
+        jump = nums[current]
+        endLoop = jump+current+1
+        for i in range(current, endLoop):
+            if nums[i] + i>= furthestJump:
+                furthestJump = i + nums[i] 
+                next = i
+        if current == next:
+            return False
+    return True
+
+
 class Test(unittest.TestCase):
     def setUp(self):
-        self.hops = Problem().hops
+        self.hops = hopsGreedy
         self.input = [
             [2,3,1,1,4],
             [3,2,1,0,4],
@@ -49,7 +65,6 @@ class Test(unittest.TestCase):
             [2,0,1,0],
             [1,1,0,1]
         ]
-
     def test_one(self):
         self.assertTrue(self.hops(self.input[0]))
     def test_two(self):
