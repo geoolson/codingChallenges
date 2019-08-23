@@ -61,22 +61,18 @@ class Test(unittest.TestCase):
             [2,3,1,1,4],
             [3,2,1,0,4],
             [8,2,4,4,4,9,5,2,5,8,8,0,8,6,9,1,1,6,3,5,1,2,6,6,0,4,8,6,0,3,2,8,7,6,5,1,7,0,3,4,8,3,5,9,0,4,0,1,0,5,9,2,0,7,0,2,1,0,8,2,5,1,2,3,9,7,4,7,0,0,1,8,5,6,7,5,1,9,9,3,5,0,7,5],
-            list(range(500, 0, -1)) + [1,0,0,0],
+            list(range(25000, 0, -1)) + [1,0,0,0],
             [2,0,1,0],
             [1,1,0,1]
         ]
-    def test_one(self):
-        self.assertTrue(self.hops(self.input[0]))
-    def test_two(self):
-        self.assertFalse(self.hops(self.input[1]))
-    def test_three(self):
-        self.assertTrue(self.hops(self.input[2]))
-    def test_four(self):
-        self.assertFalse(self.hops(self.input[3]))
-    def test_five(self):
-        self.assertTrue(self.hops(self.input[4]))
-    def test_six(self):
-        self.assertFalse(self.hops(self.input[5]))
+        self.expected = [True, False, True, False, True, False]
+    def test_hopsGreedy(self):
+        for i,j in zip(self.input, self.expected):
+            self.assertEqual(hopsGreedy(i), j)
+    
+    def test_hops(self):
+        for i,j in zip(self.input, self.expected):
+            self.assertEqual(Problem().hops(i), j)
 
 if __name__ == "__main__":
     unittest.main()
